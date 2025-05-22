@@ -2,37 +2,54 @@ import { defineField, defineType } from 'sanity'
 
 export const headerType = defineType({
   name: 'header',
-  type: 'document',
   title: 'Header',
+  type: 'document',
   fields: [
-    {
+    defineField({
       name: 'logo',
-      type: 'image',
       title: 'Logo',
-      options: { hotspot: true },
-    },
-    {
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'menuItems',
-      type: 'array',
       title: 'Menu Items',
+      type: 'array',
       of: [
         {
           type: 'object',
-          title: 'Menu Item',
           fields: [
-            { name: 'title', type: 'string', title: 'Title' },
-            { name: 'url', type: 'url', title: 'URL', hidden: ({ parent }) => parent.subItems?.length > 0 },
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              hidden: ({ parent }) => parent.subItems?.length > 0,
+            },
             {
               name: 'subItems',
-              type: 'array',
               title: 'Dropdown Items',
+              type: 'array',
               of: [
                 {
                   type: 'object',
-                  title: 'Dropdown Item',
                   fields: [
-                    { name: 'title', type: 'string', title: 'Title' },
-                    { name: 'url', type: 'url', title: 'URL' },
+                    {
+                      name: 'title',
+                      title: 'Title',
+                      type: 'string',
+                    },
+                    {
+                      name: 'url',
+                      title: 'URL',
+                      type: 'string',
+                    },
                   ],
                 },
               ],
@@ -40,23 +57,35 @@ export const headerType = defineType({
           ],
         },
       ],
-    },
-    {
+    }),
+    defineField({
       name: 'authLinks',
+      title: 'Auth Links',
       type: 'array',
-      title: 'Auth Links (Right Side)',
       of: [
         {
           type: 'object',
-          title: 'Link',
           fields: [
-            { name: 'title', type: 'string', title: 'Title' },
-            { name: 'url', type: 'url', title: 'URL' },
-            { name: 'isButton', type: 'boolean', title: 'Show as Button (e.g. Sign Up)' },
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+            },
+            {
+              name: 'isButton',
+              title: 'Show as Button',
+              type: 'boolean',
+              initialValue: false,
+            },
           ],
         },
       ],
-    },
+    }),
   ],
   preview: {
     select: {
@@ -67,7 +96,7 @@ export const headerType = defineType({
     prepare({ media, menuItems = [], authLinks = [] }) {
       return {
         title: 'Header',
-        subtitle: `${menuItems.length} menus, ${authLinks.length} links`,
+        subtitle: `${menuItems.length} menus, ${authLinks.length} auth links`,
         media,
       }
     }

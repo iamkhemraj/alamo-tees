@@ -6,61 +6,83 @@ export const footerType = defineType({
   title: 'Footer',
   fields: [
     defineField({
-      name: 'logo',
-      type: 'image',
-      title: 'Logo',
-      options: { hotspot: true },
+      name: 'companyInfo',
+      title: 'Company Information',
+      type: 'object',
+      fields: [
+        {
+          name: 'name',
+          title: 'Company Name',
+          type: 'string',
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text',
+        },
+      ],
     }),
     defineField({
-      name: 'description',
-      type: 'text',
-      title: 'Footer Description',
-    }),
-    defineField({
-      name: 'columns',
+      name: 'quickLinks',
+      title: 'Quick Links',
       type: 'array',
-      title: 'Footer Columns',
       of: [
         {
           type: 'object',
-          title: 'Column',
           fields: [
-            { name: 'title', type: 'string', title: 'Column Title' },
             {
-              name: 'links',
-              type: 'array',
-              title: 'Links',
-              of: [
-                {
-                  type: 'object',
-                  title: 'Link',
-                  fields: [
-                    { name: 'label', type: 'string', title: 'Link Label' },
-                    { name: 'url', type: 'url', title: 'Link URL' },
-                  ],
-                },
-              ],
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
             },
           ],
         },
       ],
     }),
     defineField({
+      name: 'contactInfo',
+      title: 'Contact Information',
+      type: 'object',
+      fields: [
+        {
+          name: 'email',
+          title: 'Email',
+          type: 'string',
+        },
+        {
+          name: 'phone',
+          title: 'Phone',
+          type: 'string',
+        },
+        {
+          name: 'address',
+          title: 'Address',
+          type: 'text',
+        },
+      ],
+    }),
+    defineField({
       name: 'socialLinks',
-      type: 'array',
       title: 'Social Media Links',
+      type: 'array',
       of: [
         {
           type: 'object',
-          title: 'Social Link',
           fields: [
-            { name: 'platform', type: 'string', title: 'Platform (e.g., Twitter)' },
-            { name: 'url', type: 'url', title: 'Platform URL' },
             {
-              name: 'icon',
+              name: 'platform',
+              title: 'Platform',
               type: 'string',
-              title: 'Icon Name (for frontend)',
-              description: 'Use icon key like "twitter", "facebook", "linkedin", etc.',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
             },
           ],
         },
@@ -93,11 +115,11 @@ export const footerType = defineType({
       description: 'description',
       columns: 'columns',
       socialLinks: 'socialLinks',
-      bottomLinks: 'socialLinks',
-      copyright: 'socialLinks',
+      bottomLinks: 'bottomLinks',
+      copyright: 'copyright',
     },
     
-    prepare({ media, description, copyright, columns = [], socialLinks = [] , bottomLinks = []}) {
+    prepare({ media, description, copyright, columns = [], socialLinks = [], bottomLinks = [] }) {
       return {
         title: 'Footer',
         subtitle: `${columns.length} cols, ${socialLinks.length} social links, ${bottomLinks.length} bottom links`,
