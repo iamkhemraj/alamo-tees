@@ -25,3 +25,34 @@ export const getHeader = async () => {
 
   return await client.fetch(query)
 }
+
+
+export async function getFooter() {
+  const query = groq`*[_type == 'footer'][0] {
+     logo {
+      asset->{
+        url
+      }
+    },
+    description,
+    columns[] {
+      title,
+      links[] {
+        label,
+        url
+      }
+    },
+    socialLinks[] {
+      platform,
+      url,
+      icon
+    },
+    bottomLinks[] {
+      label,
+      url
+    },
+    copyright
+  }`
+
+  return await client.fetch(query)
+}
